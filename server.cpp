@@ -20,7 +20,6 @@ void Server::onNewConnection()
         return;
     }
     QSocketNotifier *sn_r = new QSocketNotifier(sock, QSocketNotifier::Read, nullptr);
-    QSocketNotifier *sn_e = new QSocketNotifier(sock, QSocketNotifier::Exception, nullptr);
 
     connect(pSocket, &QWebSocket::binaryMessageReceived, [=](const QByteArray &msg){
         ::write(sock, msg.constData(), msg.length());
@@ -28,6 +27,7 @@ void Server::onNewConnection()
     connect(pSocket, &QWebSocket::disconnected, [=]{
         ::close(sock);
         pSocket->deleteLater();
+        sn_r->deleteLater();
     });
     connect(sn_r, &QSocketNotifier::activated, [pSocket](int fd){
         char buf[4096];
@@ -38,9 +38,5 @@ void Server::onNewConnection()
         pSocket->sendBinaryMessage(QByteArray(buf, nbytes));
     });
 
-    connect(sn_e, &QSocketNotifier::activated, [sn_e]{
-        qWarning()<<"delete QSocketNotifier";
-        sn_e->deleteLater();
-    });
 }
 
