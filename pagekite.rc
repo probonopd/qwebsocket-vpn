@@ -1,0 +1,24 @@
+###[ Current settings for pagekite.py v1.0.0.190225. ]#########
+#
+## NOTE: This file may be rewritten/reordered by pagekite.py.
+#
+
+##[ Default kite and account details ]##
+kitename   = pqy330.pagekite.me
+kitesecret = 768ebe83644acdc2e78a4zz34474e2dc
+
+##[ Front-end settings: use pagekite.net defaults ]##
+defaults
+
+##[ Back-ends and local services ]##
+service_on  = http:@kitename                   : localhost:18888   : @kitesecret
+
+
+
+
+
+##[ Miscellaneous settings ]##
+savefile = /root/.pagekite.rc
+
+###[ End of pagekite.py configuration ]#########
+END
