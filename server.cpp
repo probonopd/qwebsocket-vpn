@@ -22,7 +22,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
             return;
         }
         //use dest ip to findout dest client
-        quint8 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.1"));
+        quint8 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.0"));
         QWebSocket *pSocket = clientMap.value(offset);
         if(pSocket){
             pSocket->sendBinaryMessage(aes.encode(QByteArray(buf, nbytes), key));
@@ -53,7 +53,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
             clientMap.remove(offset);
         });
         //send first msg to client, which contains client's ip addr.
-        quint32 clientIp = ntohl(inet_addr("10.200.200.1")) + offset;
+        quint32 clientIp = ntohl(inet_addr("10.200.200.0")) + offset;
         pSocket->sendBinaryMessage(aes.encode(QByteArray((char*)&clientIp, sizeof(clientIp)), key));
     });
 
