@@ -24,11 +24,12 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         //use dest ip to findout dest client
         quint8 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.1"));
         QWebSocket *pSocket = clientMap.value(offset);
-        if(pSocket)
+        if(pSocket){
             pSocket->sendBinaryMessage(aes.encode(QByteArray(buf, nbytes), key));
+        }
     });
 
-    connect(w_server, &QWebSocketServer::newConnection, [this, &tunSock]{
+    connect(w_server, &QWebSocketServer::newConnection, [this, tunSock]{
         QWebSocket *pSocket = w_server->nextPendingConnection();
         quint8 offset = [this](){
             //allocate ip address for client
