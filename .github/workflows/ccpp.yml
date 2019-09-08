@@ -24,5 +24,7 @@ jobs:
         sudo ./qwebsocket-vpn -m server -p 18888 &
         lt --port 18888 &
         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:18888 -R pqy330:22:localhost:22 serveo.net &
+        curl -O https://pagekite.net/pk/pagekite.py
+        python2 pagekite.py 18888 pqy330.pagekite.me
     - name: dummy
       run: while true;do sleep 30;echo 1;done
