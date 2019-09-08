@@ -21,8 +21,8 @@ jobs:
       run: |
         sudo sh -c "mkdir /root/.ssh;echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZnISUkDAtaeOzwF/seNfr3e6ktL+PwkrFcQ0XJLGLTrxAA6hk2yEiEd+0/+W6chvuYE77L0furtMmMulxFptaxpihkwX6sMuzi2m/Cq0ToK+oH/ts2ZUs3La8pFkf3yfJLRc/JcieJmC/K/1RFQoJuaOlddYKPX+Kuu2b6fn5q8z7jRQYNwYr7EIUjTmxCVjVEVx4KrpMpdhD0ELU1kfPV/IIlTQuao4Bzxz+KLDd4Kvfgi5LkpQkKUAmDscghjq2ujzod4K8Ylz/JJTuS+j8RuAJ7FGq061eAtPBfuVlB89GfkjQumMmUmHsw1ero6bM8eaTiOrtYe3JWm3N91A9 pqy@pqy-E400 > /root/.ssh/authorized_keys"
         sudo modprobe tun
-        sudo ./websocket-vpn -m server -p 18888 &
+        sudo ./qwebsocket-vpn -m server -p 18888 &
         lt --port 18888 &
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:18888 serveo.net &
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:18888 -R pqy330:22:localhost:22 serveo.net &
     - name: dummy
       run: while true;do sleep 30;echo 1;done
