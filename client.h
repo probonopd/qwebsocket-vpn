@@ -2,6 +2,7 @@
 #define CLIENT_H
 
 #include <QObject>
+#include <QTimer>
 #include <QtWebSockets/QWebSocket>
 #include "qaesencryption.h"
 
@@ -15,6 +16,7 @@ private:
     QWebSocket m_webSocket;
     QAESEncryption aes;
     QByteArray key;
+    QTimer pingTimer;
     bool inited; //true if first msg which contains client ip is received
 };
 

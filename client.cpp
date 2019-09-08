@@ -9,8 +9,12 @@
 
 Client::Client(const QString &url, QObject *parent, QByteArray _key) : QObject(parent), key(_key), inited(false), aes(QAESEncryption::AES_256, QAESEncryption::ECB)
 {
+    pingTimer.setInterval(10000);
     connect(&m_webSocket, &QWebSocket::connected, []{
         qWarning()<<"Connection successful!";
+    });
+    connect(&pingTimer, &QTimer::timeout, [this]{
+        m_webSocket.ping();
     });
     m_webSocket.open(QUrl(url));
     qint32 sock = create_tun_interface();
