@@ -38,7 +38,7 @@ int create_tun_interface(void)
         return fd;
     }
     memset(&ifr, 0, sizeof(ifr));
-    sprintf(ifr.ifr_name, "ws_vpn_%d", fd);
+    sprintf(ifr.ifr_name, VPN_IF);
     ifr.ifr_flags = (IFF_TUN | IFF_NO_PI|IFF_UP);
     err = ioctl(fd, TUNSETIFF, &ifr);
     if(err){

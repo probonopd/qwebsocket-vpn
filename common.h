@@ -17,6 +17,7 @@ struct UdpMsg {
 
 #define ADDR_INFO_LEN (sizeof(struct UdpMsg))
 #define MAX_MSG_LEN 4096
+#define VPN_IF "ws_vpn"
 
 int if_up(const char *if_name);
 

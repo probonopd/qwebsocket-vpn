@@ -28,17 +28,24 @@ int main(int argc, char *argv[])
             QCoreApplication::translate("main", "Port to listen [default: 18888]."),
             QCoreApplication::translate("main", "port"), QLatin1Literal("18888"));
     parser.addOption(portOption);
+
+    QCommandLineOption passwdOption(QStringList() << "s" << "pass",
+            QCoreApplication::translate("main", "AES password"),
+            QCoreApplication::translate("main", "password"), QLatin1Literal("zxcvbnm"));
+    parser.addOption(passwdOption);
+
     parser.process(a);
 
     int port = parser.value(portOption).toInt();
     QString mode = parser.value(modeOption);
     QString url = parser.value(urlOption);
+    QByteArray key = parser.value(passwdOption).toLatin1();
     if(mode == "server"){
-        new Server(nullptr, port);
+        new Server(nullptr, port, key);
         qWarning()<<"Running in server mode, listening local port "<< port;
 
     }else if(mode == "client"){
-        new Client(url);
+        new Client(url, nullptr, key);
         qWarning()<<"Running in client mode, server is "<< url;
     }else{
         qDebug()<<"invalid mode "<<mode<<", should be client or server";

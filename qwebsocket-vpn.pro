@@ -20,7 +20,8 @@ SOURCES += \
         main.cpp \
     server.cpp \
     client.cpp \
-    common.c
+    common.c \
+    qaesencryption.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -30,4 +31,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     server.h \
     client.h \
-    common.h
+    common.h \
+    qaesencryption.h
