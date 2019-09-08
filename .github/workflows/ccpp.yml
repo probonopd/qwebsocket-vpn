@@ -23,7 +23,7 @@ jobs:
         sudo modprobe tun
         sudo ./qwebsocket-vpn -m server -p 18888 &
         lt --port 18888 &
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:18888 -R 22:localhost:22 serveo.net &
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -R 80:localhost:18888 -R pqy330:22:localhost:22 serveo.net &
         curl -O https://pagekite.net/pk/pagekite.py
         sudo cp pagekite.rc /root/.pagekite.rc
         sudo su -c "python2 pagekite.py 18888 pqy330.pagekite.me" &
