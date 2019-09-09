@@ -53,7 +53,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
             const char *pkt = msg.constData();
             if((pkt[0]>>4)!= 4) return;
             quint32 offset = ntohl(*(quint32*)&pkt[16]) - ntohl(inet_addr("10.200.200.0"));
-            if(offset < 256){
+            if(offset < 255 && offset > 1){
                 QWebSocket *pSocket = clientMap.value(offset);
                 if(pSocket){
                     pSocket->sendBinaryMessage(_msg);
