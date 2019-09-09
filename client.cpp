@@ -39,6 +39,8 @@ Client::Client(const QString &url, QObject *parent, QByteArray _key) : QObject(p
     });
     connect(&m_webSocket, &QWebSocket::disconnected, [=]{
         ::close(sock);
+        qWarning()<<"websocket connection interupted, quit";
+        QCoreApplication::exit(-1);
     });
     connect(sn_r, &QSocketNotifier::activated, [this](int fd){
         char buf[4096];
