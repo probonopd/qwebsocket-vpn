@@ -58,7 +58,15 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
                 if(pSocket){
                     pSocket->sendBinaryMessage(_msg);
                 }
-            }else{
+            }else if(offset == 0 || offset == 255){ 
+	        //broadcast pkt
+                ::write(tunSock, msg.constData(), msg.length());
+		for(auto pSocket : clientMap){
+		    if(pSocket && pSocket != QObject::sender()){
+		        pSocket->sendBinaryMessage(_msg);
+		    }
+		}
+	    }else{
                 ::write(tunSock, msg.constData(), msg.length());
             }
 
