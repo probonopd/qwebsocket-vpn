@@ -24,7 +24,8 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         //drop ipv6 packet
         if((buf[0]>>4)!= 4) return;
         //use dest ip to findout dest client
-        quint8 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.0"));
+        quint32 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.0"));
+        if(offset > 255) return;
         QWebSocket *pSocket = clientMap.value(offset);
         if(pSocket){
             pSocket->sendBinaryMessage(aes.encode(QByteArray(buf, nbytes), key));
@@ -48,7 +49,19 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         clientMap[offset] = pSocket;
         connect(pSocket, &QWebSocket::binaryMessageReceived, [=](const QByteArray &_msg){
             QByteArray msg = aes.removePadding(aes.decode(_msg, key));
-            ::write(tunSock, msg.constData(), msg.length());
+            //check if dest is another client and forward it directly
+            const char *pkt = msg.constData();
+            if((pkt[0]>>4)!= 4) return;
+            quint32 offset = ntohl(*(quint32*)&pkt[16]) - ntohl(inet_addr("10.200.200.0"));
+            if(offset < 256){
+                QWebSocket *pSocket = clientMap.value(offset);
+                if(pSocket){
+                    pSocket->sendBinaryMessage(_msg);
+                }
+            }else{
+                ::write(tunSock, msg.constData(), msg.length());
+            }
+
         });
         connect(pSocket, &QWebSocket::disconnected, [=]{
             pSocket->deleteLater();
