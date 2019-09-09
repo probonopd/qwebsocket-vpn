@@ -46,6 +46,8 @@ Client::Client(const QString &url, QObject *parent, QByteArray _key) : QObject(p
         if(nbytes<=0){
             return;
         }
+        //drop ipv6 packet
+        if((buf[0]>>4)!= 4) return;
         m_webSocket.sendBinaryMessage(aes.encode(QByteArray(buf, nbytes), key));
     });
 
