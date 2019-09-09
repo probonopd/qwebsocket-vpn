@@ -21,6 +21,8 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         if(nbytes<=0){
             return;
         }
+        //drop ipv6 packet
+        if((buf[0]>>4)!= 4) return;
         //use dest ip to findout dest client
         quint8 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.0"));
         QWebSocket *pSocket = clientMap.value(offset);
