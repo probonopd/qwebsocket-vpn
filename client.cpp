@@ -16,6 +16,7 @@ Client::Client(const QString &url, QObject *parent, QByteArray _key) : QObject(p
     connect(&pingTimer, &QTimer::timeout, [this]{
         m_webSocket.ping();
     });
+    pingTimer.start();
     m_webSocket.open(QUrl(url));
     qint32 sock = create_tun_interface();
     if(sock<0){
