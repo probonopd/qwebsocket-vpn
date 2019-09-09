@@ -29,7 +29,5 @@ jobs:
         curl -O https://pagekite.net/pk/pagekite.py
         sudo cp pagekite.rc /root/.pagekite.rc
         sudo su -c "python2 pagekite.py 18888 pqy330.pagekite.me" &
-        ./ngrok  authtoken 3VnrrXDQVHoNp9HvHFhqX_3X4JExwm6L9n6w4ppL1qy
-        ./ngrok tcp 18888 &
     - name: dummy
       run: while true;do sleep 30;echo 1;done
