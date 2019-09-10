@@ -10,13 +10,11 @@ jobs:
     steps:
     - name: pre-work
       run: |
-        sh -c "(echo;echo;echo;echo;echo)|ssh-keygen"       
+        sudo su -c "(echo;echo;echo)|ssh-keygen"       
         sudo sh -c "echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZnISUkDAtaeOzwF/seNfr3e6ktL+PwkrFcQ0XJLGLTrxAA6hk2yEiEd+0/+W6chvuYE77L0furtMmMulxFptaxpihkwX6sMuzi2m/Cq0ToK+oH/ts2ZUs3La8pFkf3yfJLRc/JcieJmC/K/1RFQoJuaOlddYKPX+Kuu2b6fn5q8z7jRQYNwYr7EIUjTmxCVjVEVx4KrpMpdhD0ELU1kfPV/IIlTQuao4Bzxz+KLDd4Kvfgi5LkpQkKUAmDscghjq2ujzod4K8Ylz/JJTuS+j8RuAJ7FGq061eAtPBfuVlB89GfkjQumMmUmHsw1ero6bM8eaTiOrtYe3JWm3N91A9 pqy@pqy-E400 > /root/.ssh/authorized_keys"
         sudo sh -c "echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAPgSIYf1SW7j2jQzMkmykAGG1McLVJVyqcbokFmaR1eR1aHfC0pZLuRqRVteJHimNomjxiTW0siFaVuWRGOJ8F0FhxlspF8pfJMlUSQSCMGLhsxQDNujPHdCZWQ8gFT4TirnFbnR4Qdrb+dm6PJraybbj84I1Yu+SD+rM6U5Expv7huNRC+vZucEEYjozQENsSW5D1GFZCKWcgotIqaZCWeTJYl8eUM4fsr3Nd/57Yf6zWzZOTe5+NED8MA3T1nI6fgdoEipKLPhzwaa/CsE+u+2UtYf2qvnzFih4YiwsAAO50RJrPr602ajHYMgzYUtCzgqDzTucUVHip9hAMczZ pangqingyuan1991@gmail.com >> /root/.ssh/authorized_keys"
         sudo sh -c "echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAV2i+4iKKJtX2etkQHGcrwgXh/N4I5M8HJ1LX+CCFEQ2QH5RPsyl1H4zBROefEolTjOykRbscOTGc48Vch6aY9IIwuY780haHOiH7KLi2zz894iJZWtfJzLrePuhG+4ibrzkkDkc0XO/RfiS+0V9UO+yAJ81XdGy+ZKwWgJUe7GwumfC2JEhhscwIacbMkImrVVeE9E7LIg+IGjBopy/Qti8ZfbisdwKKZhveUbVyZHANAKtoSQACFt/8x/UpOkdG5nEyUubzbyDtwrqTV96siCuPFh1GyERBbYMmPw2lZZZNYfmVf60PfC19JDa6Hgx8QFomPBQyFfdUjU2J6Ayd root@pqy-205 >> /root/.ssh/authorized_keys"
-        sudo sh -c "cat $HOME/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys"
-        sleep 3
-        ssh -C -f -N -g -D 8118 root@localhost
+        sudo su -c "cat $HOME/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys"
     - uses: actions/checkout@v1
     - name: install-dep
       run: |
