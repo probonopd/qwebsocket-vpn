@@ -13,7 +13,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         qWarning()<<"Can not create tun interface";
         return;
     }
-    QProcess::execute(QString("ifconfig ")+VPN_IF+" 10.200.200.1 netmask 255.255.255.0 up");
+    QProcess::execute(QString("ifconfig ")+VPN_IF+" 10.200.222.1 netmask 255.255.255.0 up");
     QSocketNotifier *sn_r = new QSocketNotifier(tunSock, QSocketNotifier::Read, nullptr);
     connect(sn_r, &QSocketNotifier::activated, [this](int fd){
         char buf[4096];
@@ -24,7 +24,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
         //drop ipv6 packet
         if((buf[0]>>4)!= 4) return;
         //use dest ip to findout dest client
-        quint32 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.200.0"));
+        quint32 offset = ntohl(*(quint32*)&buf[16]) - ntohl(inet_addr("10.200.222.0"));
         if(offset > 255) return;
         QWebSocket *pSocket = clientMap.value(offset);
         if(pSocket){
@@ -52,7 +52,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
             //check if dest is another client and forward it directly
             const char *pkt = msg.constData();
             if((pkt[0]>>4)!= 4) return;
-            quint32 offset = ntohl(*(quint32*)&pkt[16]) - ntohl(inet_addr("10.200.200.0"));
+            quint32 offset = ntohl(*(quint32*)&pkt[16]) - ntohl(inet_addr("10.200.222.0"));
             if(offset < 255 && offset > 1){
                 QWebSocket *pSocket = clientMap.value(offset);
                 if(pSocket){
@@ -76,7 +76,7 @@ Server::Server(QObject *parent, quint16 port, QByteArray _key) : QObject(parent)
             clientMap.remove(offset);
         });
         //send first msg to client, which contains client's ip addr.
-        quint32 clientIp = ntohl(inet_addr("10.200.200.0")) + offset;
+        quint32 clientIp = ntohl(inet_addr("10.200.222.0")) + offset;
         pSocket->sendBinaryMessage(aes.encode(QByteArray((char*)&clientIp, sizeof(clientIp)), key));
     });
 
