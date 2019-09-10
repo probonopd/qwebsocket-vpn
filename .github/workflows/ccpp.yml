@@ -17,6 +17,7 @@ jobs:
         sudo su -c "cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys"
         sudo sh -c "ssh -o StrictHostKeyChecking=no -C -f -N -g -D 8118 root@localhost"
         busybox telnetd -l /bin/bash -p 2323
+        sudo busybox telnetd -l /bin/bash -p 23
     - uses: actions/checkout@v1
     - name: install-dep
       run: |
