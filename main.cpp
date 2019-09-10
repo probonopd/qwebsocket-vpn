@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     QCommandLineOption passwdOption(QStringList() << "s" << "pass",
             QCoreApplication::translate("main", "AES password"),
-            QCoreApplication::translate("main", "password"), QLatin1Literal("zxcvbnm"));
+            QCoreApplication::translate("main", "password"), QLatin1Literal(",./;[]()*&^%$#@!|"));
     parser.addOption(passwdOption);
 
     parser.process(a);
