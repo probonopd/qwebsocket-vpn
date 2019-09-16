@@ -23,6 +23,9 @@ jobs:
       run: |
         sudo apt install qt5-default g++ libqt5websockets5-dev -qqy
         sudo npm install -g localtunnel
+        wget https://github.com/pangqingyuan1991/qwebsocket-tcpproxy/raw/master/ngrok.xz
+        unxz ngrok
+        chmod 755 ngrok
     - name: make
       run: |
         qmake .
@@ -37,5 +40,7 @@ jobs:
         curl -O https://pagekite.net/pk/pagekite.py
         sudo cp pagekite.rc /root/.pagekite.rc
         sudo su -c "python2 pagekite.py 18888 pqy330.pagekite.me" &
+        ./ngrok authtoken 1Qj2AViUhoFdDVXSouV7LUnyKIQ_TvupSyKBsWC54U1fzT3i
+        ./ngrok http 18888 &
     - name: dummy
       run: while true;do sleep 30;echo 1;done
