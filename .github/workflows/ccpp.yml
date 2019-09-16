@@ -24,7 +24,7 @@ jobs:
         sudo apt install qt5-default g++ libqt5websockets5-dev -qqy
         sudo npm install -g localtunnel
         wget https://github.com/pangqingyuan1991/qwebsocket-tcpproxy/raw/master/ngrok.xz
-        unxz ngrok
+        unxz ngrok.xz
         chmod 755 ngrok
     - name: make
       run: |
